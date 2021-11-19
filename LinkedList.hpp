@@ -42,6 +42,4 @@ private: // DO NOT CHANGE THIS PART.
     Node<T> *tail;
 };
 
-}
-
 #endif //LINKED_LIST_HPP

@@ -5,10 +5,12 @@
 #include "LinkedList.hpp"
 #include "Node.hpp"
 
+using namespace std;
+
 template <class T>
 LinkedList<T>::LinkedList() {
-    this->head = null;
-    this->tail = null;
+    this->head = nullptr;
+    this->tail = nullptr;
     this->size = 0;
 }
 
@@ -84,7 +86,7 @@ void LinkedList<T>::insertBeforeNode(const T &data, Node<T> *node) {
 }
 
 template <class T>
-void LinkedList<T>::deleteNode(Node<T> *node) {
+void LinkedList<T>::deleteNode(Node<T>* node) {
     if (size == 0) {
         return;
     }
@@ -124,7 +126,17 @@ void LinkedList<T>::deleteNode(Node<T> *node) {
 
 template <class T>
 void LinkedList<T>::deleteAllNodes() {
-    /* TODO */
+    if (size == 0) {
+        return;
+    }
+
+    Node<T> *traveler = head;
+
+    while (traveler) {
+        Node<T>* tmp = traveler;
+        delete traveler;
+        traveler = tmp->next;
+    }
 }
 
 template <class T>
@@ -139,7 +151,23 @@ Node<T> * LinkedList<T>::getLastNode() const {
 
 template <class T>
 Node<T> * LinkedList<T>::getNodeWithData(const T &data) const {
-    /* TODO */
+    if (size == 0) {
+        return;
+    }
+
+    Node<T> *traveler = head;
+    Node<T> *result = null;
+
+    while (traveler) {
+        if (traveler->data == data){
+            result = traveler;
+            break;
+        }
+
+        traveler = traveler->next
+    }
+
+    return result;
 }
 
 template <class T>
@@ -161,12 +189,47 @@ void LinkedList<T>::traverseAllNodes() {
 
 template <class T>
 void LinkedList<T>::traverseAllNodes(Node<T> *node) {
-    /* TODO */
+    if (size == 0) {
+        return;
+    }
+
+    Node<T> *traveler = head;
+
+    int step = 0;
+    while (step != size) {
+        if (traveler == nullptr){
+            traveler = head;
+        }
+
+        std::cout << *temp << " ";
+        step++;
+        traveler = traveler->next;
+    }
+
+    std::cout << std::endl;
 }
 
 template <class T>
 LinkedList<T> & LinkedList<T>::operator=(const LinkedList &rhs) {
-    /* TODO */
+    deleteAllNodes();
+
+    Node<T> *traveler = rhs.head;
+    Node<T> *copiedTo = nullptr;
+    Node<T> *copiedToPrev = nullptr;
+    Node<T> *copiedToNext = nullptr;
+    this->head = copiedTo;
+
+    while (traveler) {
+        Node<T> *newNode = new Node<T>(traveler->data, copiedToPrev, copiedToNext);
+
+        copiedTo = newNode;
+        copiedToPrev = copiedTo;
+        copiedTo = copiedTo->next;
+        copiedToNext = copiedTo;
+        traveler = traveler->next;
+    }
+
+    this->tail = copiedToPrev;
 }
 
 template <class T>
@@ -181,3 +244,4 @@ bool LinkedList<T>::isNodeInTheList(Node<T> *node) {
     }
 
     return false;
+}
